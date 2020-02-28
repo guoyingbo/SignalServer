@@ -24,9 +24,6 @@ std::string size_t2str(size_t i) {
 	return str;
 }
 
-
-#define STACK_ARRAY(TYPE, LEN) static_cast<TYPE*>(::alloca((LEN)*sizeof(TYPE)))
-
 bool hex_decode(char ch, unsigned char* val) {
 	if ((ch >= '0') && (ch <= '9')) {
 		*val = ch - '0';
@@ -76,8 +73,9 @@ size_t url_decode(char * buffer, size_t buflen,
 std::string s_url_decode(const std::string& source) {
 	// Ask transformation function to approximate the destination size (returns upper bound)
 	size_t maxlen = url_decode(NULL, 0, source.data(), source.length());
-	char * buffer = STACK_ARRAY(char, maxlen);
+	char * buffer = new char[maxlen];
 	size_t len = url_decode(buffer, maxlen, source.data(), source.length());
 	std::string result(buffer, len);
+	delete []buffer;
 	return result;
 }
