@@ -14,13 +14,13 @@
 
 std::string int2str(int i) {
 	char str[128];
-	sprintf_s(str, "%d", i);
+	sprintf(str, "%d", i);
 	return str;
 }
 
 std::string size_t2str(size_t i) {
 	char str[128];
-	sprintf_s(str, "%d", (int)i);
+	sprintf(str, "%d", (int)i);
 	return str;
 }
 

@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#if defined(WEBRTC_POSIX)
+#ifndef _WINDOWS
 #include <sys/select.h>
 #endif
 #include <time.h>
