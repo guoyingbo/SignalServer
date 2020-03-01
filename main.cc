@@ -17,11 +17,12 @@
 #include <time.h>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "data_socket.h"
 #include "peer_channel.h"
 
-
+ICE g_ice_server;
 
 static const size_t kMaxConnections = (FD_SETSIZE - 2);
 
@@ -50,9 +51,44 @@ void HandleBrowserRequest(DataSocket* ds, bool* quit) {
   }
 }
 
+bool load_config() {
+  std::ifstream is("ice.conf");
+  if (is.good()) {
+    char line[256];
+    while (is.getline(line,256)) {
+      std::string sline = line;
+      auto pos = sline.find("=");
+      if (pos != std::string::npos) {
+        std::string key = sline.substr(0, pos);
+        std::string value = sline.substr(pos+1);
+
+        if (key == "URI") {
+          g_ice_server.uri = value;
+        }
+        else if (key == "username"){
+          g_ice_server.username = value;
+        }
+        else if (key == "password") {
+          g_ice_server.password = value;
+        }
+
+      }
+    }
+  }
+  else {
+    printf("Open file ice.conf failed.\n");
+    return false;
+  }
+
+  if (g_ice_server.uri.empty()){
+    printf("config uri empty.\n");
+    return false;
+  }
+  return true;
+}
 int main(int argc, char* argv[]) {
 
-
+  load_config();
   int port = 8888;
 
   // Abort if the user specifies a port that is outside the allowed

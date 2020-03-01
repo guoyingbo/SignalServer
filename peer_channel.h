@@ -17,6 +17,13 @@
 #include <string>
 #include <vector>
 
+struct ICE{
+	std::string uri;
+	std::string username;
+	std::string password;
+};
+
+extern ICE g_ice_server;
 class DataSocket;
 
 // Represents a single peer connected to the server.

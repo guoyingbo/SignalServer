@@ -251,6 +251,12 @@ bool PeerChannel::AddMember(DataSocket* ds) {
   // Let the newly connected peer know about other members of the channel.
   std::string content_type;
   std::string response = BuildResponseForNewMember(*new_guy, &content_type);
+ // response += "--uri=\"turn:115.231.220.242:8101\" username=\"ts1\" password=\"12345678\"\n";
+  if (g_ice_server.uri.size()) {
+    response += "--uri=\"" + g_ice_server.uri + "\" ";
+    response += "username=\"" + g_ice_server.username + "\" ";
+    response += "password=\"" + g_ice_server.password + "\"\n";
+  }
   ds->Send("200 Added", true, content_type, new_guy->GetPeerIdHeader(),
            response);
   return true;
