@@ -57,7 +57,7 @@ bool load_config() {
     char line[256];
     while (is.getline(line,256)) {
       std::string sline = line;
-      auto pos = sline.find("=");
+      size_t pos = sline.find("=");
       if (pos != std::string::npos) {
         std::string key = sline.substr(0, pos);
         std::string value = sline.substr(pos+1);
