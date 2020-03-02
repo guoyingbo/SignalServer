@@ -11,7 +11,7 @@ SNAME=SignalServer
 
 #the full path and name of the daemon program
 #Warning: The name of executable file must be identical with service name
-PROG=/root/$SNAME/$SNAME
+PROG=/usr/local/bin/$SNAME
 
 
 # start function
