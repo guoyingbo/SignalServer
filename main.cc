@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #ifndef _WINDOWS
+#include <unistd.h>
 #include <sys/select.h>
 #endif
 #include <time.h>
@@ -52,7 +53,10 @@ void HandleBrowserRequest(DataSocket* ds, bool* quit) {
 }
 
 bool load_config() {
-  std::ifstream is("ice.conf");
+  std::ifstream is("SignalServer.conf");
+  if (!is.good()) {
+    is.open("/usr/local/etc/SignalServer.conf",std::ios::in);
+  }
   if (is.good()) {
     char line[256];
     while (is.getline(line,256)) {
@@ -87,6 +91,10 @@ bool load_config() {
   return true;
 }
 int main(int argc, char* argv[]) {
+
+#ifndef _WINDOWS
+  daemon(0,0);
+#endif
 
   load_config();
   int port = 8888;
