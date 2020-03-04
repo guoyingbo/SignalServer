@@ -13,9 +13,14 @@ $(TARGET) : $(OBJS)
 	$(XX) $(OBJS) -o $(TARGET)
 clean:
 	rm -rf *.o SignalServer
-
+	
 install:
 	cp ./SignalServer /usr/local/bin/SignalServer
 	cp ./SignalServer.conf /usr/local/etc/SignalServer.conf
 	cp ./service.sh /etc/init.d/SignalServer
 	chmod +x /etc/init.d/SignalServer
+
+uninstall:
+	rm -rf /usr/local/bin/SignalServer
+	rm -rf /usr/local/etc/SignalServer.conf
+	rm -rf /etc/init.d/SignalServer
