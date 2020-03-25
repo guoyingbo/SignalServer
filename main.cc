@@ -75,6 +75,9 @@ bool load_config() {
         else if (key == "password") {
           g_ice_server.password = value;
         }
+        else if (key == "server_name") {
+          g_ice_server.server_name = value;
+        }
 
       }
     }
@@ -88,6 +91,10 @@ bool load_config() {
     printf("config uri empty.\n");
     return false;
   }
+  
+  printf("uri:%s %s:%s\n", g_ice_server.uri.data(), g_ice_server.username.data(),
+    g_ice_server.password.data());
+  printf("server name:%s\n", g_ice_server.server_name.data());
   return true;
 }
 int main(int argc, char* argv[]) {

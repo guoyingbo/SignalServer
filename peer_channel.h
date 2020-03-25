@@ -21,6 +21,7 @@ struct ICE{
 	std::string uri;
 	std::string username;
 	std::string password;
+	std::string server_name;
 };
 
 extern ICE g_ice_server;

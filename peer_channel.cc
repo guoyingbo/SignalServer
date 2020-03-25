@@ -257,6 +257,9 @@ bool PeerChannel::AddMember(DataSocket* ds) {
     response += "username=\"" + g_ice_server.username + "\" ";
     response += "password=\"" + g_ice_server.password + "\"\n";
   }
+  if (g_ice_server.username != "") {
+    response += "--server_name=\"" + g_ice_server.server_name + "\"\n";
+  }
   ds->Send("200 Added", true, content_type, new_guy->GetPeerIdHeader(),
            response);
   return true;
