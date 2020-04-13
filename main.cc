@@ -60,6 +60,7 @@ bool load_config() {
   if (is.good()) {
     char line[256];
     while (is.getline(line,256)) {
+      if (line[0] == '#') continue;
       std::string sline = line;
       size_t pos = sline.find("=");
       if (pos != std::string::npos) {
@@ -81,6 +82,7 @@ bool load_config() {
 
       }
     }
+    is.close();
   }
   else {
     printf("Open file ice.conf failed.\n");
