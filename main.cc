@@ -24,7 +24,7 @@
 #include "peer_channel.h"
 
 ICE g_ice_server;
-
+int port = 8888;
 static const size_t kMaxConnections = (FD_SETSIZE - 2);
 
 void HandleBrowserRequest(DataSocket* ds, bool* quit) {
@@ -79,6 +79,9 @@ bool load_config() {
         else if (key == "server_name") {
           g_ice_server.server_name = value;
         }
+        else if (key == "port") {
+          port = atoi(value.data());
+        }
 
       }
     }
@@ -106,7 +109,6 @@ int main(int argc, char* argv[]) {
 #endif
 
   load_config();
-  int port = 8888;
 
   // Abort if the user specifies a port that is outside the allowed
   // range [1, 65535].
