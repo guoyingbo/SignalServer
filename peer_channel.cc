@@ -89,6 +89,9 @@ bool ChannelMember::NotifyOfOtherMember(const ChannelMember& other) {
   return true;
 }
 
+#ifndef snprintf
+#define snprintf _snprintf
+#endif
 // Returns a string in the form "name,id,connected\n".
 std::string ChannelMember::GetEntry() const {
   assert(name_.length() <= kMaxNameLength);
