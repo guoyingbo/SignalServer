@@ -102,14 +102,52 @@ bool load_config() {
   printf("server name:%s\n", g_ice_server.server_name.data());
   return true;
 }
+
+void load_config(int argc, char* argv[])
+{
+
+  for (int i = 1; i < argc; i++) {
+    std::string sline = argv[i];
+    size_t pos = sline.find("=");
+    if (pos != std::string::npos) {
+      std::string key = sline.substr(0, pos);
+      std::string value = sline.substr(pos + 1);
+
+      if (key == "URI") {
+        g_ice_server.uri = value;
+      }
+      else if (key == "username") {
+        g_ice_server.username = value;
+      }
+      else if (key == "password") {
+        g_ice_server.password = value;
+      }
+      else if (key == "server_name") {
+        g_ice_server.server_name = value;
+      }
+      else if (key == "port") {
+        port = atoi(value.data());
+      }
+
+    }
+  }
+
+ 
+}
+
 int main(int argc, char* argv[]) {
 
 #ifndef _WINDOWS
   daemon(0,0);
 #endif
 
-  load_config();
-
+  if (argc > 1) {
+    load_config(argc, argv);
+  }
+  else {
+    load_config();
+  }
+  
   // Abort if the user specifies a port that is outside the allowed
   // range [1, 65535].
   if ((port < 1) || (port > 65535)) {
